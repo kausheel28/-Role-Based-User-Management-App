@@ -107,15 +107,7 @@ const LoginPage: React.FC = () => {
             </div>
           </form>
 
-          <div className="mt-6 border-t border-gray-200 pt-6">
-            <h3 className="text-sm font-medium text-gray-700 mb-3">Demo Accounts:</h3>
-            <div className="space-y-2 text-xs text-gray-600">
-              <div><strong>Admin:</strong> admin@example.com / admin123</div>
-              <div><strong>Manager:</strong> manager@example.com / manager123</div>
-              <div><strong>Agent:</strong> agent1@example.com / agent123</div>
-              <div><strong>Viewer:</strong> viewer@example.com / viewer123</div>
-            </div>
-          </div>
+
         </div>
       </div>
     </div>
