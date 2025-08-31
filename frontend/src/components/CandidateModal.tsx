@@ -1,5 +1,5 @@
 // AI-assisted: see ai-assist.md
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -38,18 +38,35 @@ const CandidateModal: React.FC<CandidateModalProps> = ({ isOpen, onClose, candid
     formState: { errors },
   } = useForm<FormData>({
     resolver: yupResolver(schema),
-    defaultValues: candidate ? {
-      full_name: candidate.full_name,
-      email: candidate.email,
-      phone: candidate.phone || '',
-      position: candidate.position,
-      status: candidate.status,
-      resume_url: candidate.resume_url || '',
-      notes: candidate.notes || '',
-    } : {
+    defaultValues: {
       status: CandidateStatus.NEW,
     },
   });
+
+  // Update form when candidate changes
+  useEffect(() => {
+    if (candidate) {
+      reset({
+        full_name: candidate.full_name,
+        email: candidate.email,
+        phone: candidate.phone || '',
+        position: candidate.position,
+        status: candidate.status,
+        resume_url: candidate.resume_url || '',
+        notes: candidate.notes || '',
+      });
+    } else {
+      reset({
+        full_name: '',
+        email: '',
+        phone: '',
+        position: '',
+        status: CandidateStatus.NEW,
+        resume_url: '',
+        notes: '',
+      });
+    }
+  }, [candidate, reset]);
 
   const createMutation = useMutation({
     mutationFn: candidatesApi.createCandidate,

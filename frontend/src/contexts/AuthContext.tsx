@@ -35,7 +35,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   const isAuthenticated = !!user;
-
+  console.log(user);
+  console.log(permissions);
   const refreshUser = async () => {
     try {
       console.log('🔄 Attempting to refresh user...');
@@ -53,6 +54,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       const userResponse = await authApi.getMe();
       console.log('✅ User info loaded:', userResponse.data);
       setUser(userResponse.data);
+      localStorage.setItem('user', JSON.stringify(userResponse.data));
       
       // Try to get permissions, but don't fail if unauthorized
       try {
