@@ -173,11 +173,49 @@ npm test
 - Input validation and sanitization across all endpoints
 - Role-based API access control with page-level permissions
 
-## Architecture
+## 📚 Documentation
+
+This project includes comprehensive documentation with **detailed ASCII diagrams** (no Mermaid dependencies) that are perfect for screen sharing and technical walkthroughs:
+
+### 🏗️ [Architecture Documentation](./ARCHITECTURE.md)
+Complete system architecture with clear visual diagrams:
+- **Authentication Flow** - Session persistence, token refresh, and route protection
+- **Permission System** - Role-based access with admin overrides
+- **Component Hierarchy** - React component structure and routing
+- **Database Schema** - Complete ERD with tables, relationships, and constraints
+- **Deployment Architecture** - Development, production, and CI/CD options
+
+### 🛡️ [Security Documentation](./SECURITY.md)
+Multi-layer security model with implementation details:
+- **Security Architecture** - Client, application, authorization, and data layers
+- **JWT Authentication** - Access and refresh token management
+- **Permission System** - RBAC with page-level controls
+- **Protection Mechanisms** - CSRF, rate limiting, input validation
+
+### 🧪 [Testing Documentation](./TESTING.md)
+Comprehensive testing strategy and implementation:
+- **Testing Pyramid** - Unit (75%), Integration (20%), E2E (5%)
+- **Backend Testing** - pytest with fixtures and mocking
+- **Frontend Testing** - Jest with React Testing Library
+- **Security Testing** - Authentication and authorization tests
+
+### 🚀 [Deployment Documentation](./DEPLOYMENT.md)
+Complete deployment guide and environment setup:
+- **Local Development** - Docker Compose and native setup
+- **Production Options** - Vercel, Railway, AWS with pros/cons
+- **CI/CD Pipeline** - GitHub Actions with quality gates
+- **Environment Configuration** - Variables and secrets management
+
+### 📖 [Documentation Index](./docs/README.md)
+Navigation hub for all project documentation with quick reference links.
+
+> **✅ Key Issues Resolved**: Session persistence on page refresh, debounced search in user management, interview status updates, and automatic token refresh - all documented with technical details in the architecture diagrams.
+
+## Architecture Overview
 
 ### Database Schema
 - `users`: User accounts with roles and status
-- `user_page_access`: Per-user page permission overrides
+- `user_page_access`: Per-user page permission overrides  
 - `audit_logs`: Comprehensive action logging with metadata
 - `candidates`: Candidate management with status tracking
 - `interviews`: Interview scheduling with candidate relationships
@@ -200,8 +238,9 @@ npm test
 
 ## Deployment
 
-### Environment Variables
-Create `.env` files for each environment:
+> **📖 For comprehensive deployment instructions, see [DEPLOYMENT.md](./DEPLOYMENT.md)**
+
+### Quick Environment Setup
 
 #### Backend (.env)
 ```
@@ -216,10 +255,13 @@ REFRESH_TOKEN_EXPIRE_DAYS=7
 REACT_APP_API_URL=http://localhost:8000
 ```
 
-### Production Deployment
-- Backend: Deploy to Railway, Render, or similar platform
-- Frontend: Deploy to Vercel, Netlify, or similar platform
-- Database: Use managed PostgreSQL service
+### Recommended Production Stack
+- **Frontend**: Vercel (React build + CDN)
+- **Backend**: Railway (FastAPI container + auto-scaling)  
+- **Database**: Railway PostgreSQL (managed + backups)
+- **CI/CD**: GitHub Actions (automated testing + deployment)
+
+**Cost**: $0-20/month • **Scale**: 10k+ users • **Maintenance**: Minimal overhead
 
 ## Enterprise Compliance
 

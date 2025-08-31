@@ -1,5 +1,5 @@
 // AI-assisted: see ai-assist.md
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { usersApi } from '../services/api';
 import { UserRole, PagePermission } from '../types';
@@ -24,6 +24,7 @@ interface CreateUserForm {
 
 const UsersPage: React.FC = () => {
   const [search, setSearch] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -40,6 +41,17 @@ const UsersPage: React.FC = () => {
   
   const itemsPerPage = 10;
 
+  // Debounce search input to avoid excessive API calls
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 300); // 300ms delay
+
+    return () => clearTimeout(timer);
+  }, [search]);
+
+
+
   // Define available page permissions
   const pagePermissions: PagePermission[] = [
     { name: 'dashboard', label: 'Dashboard', description: 'Access to main dashboard' },
@@ -52,10 +64,10 @@ const UsersPage: React.FC = () => {
 
   // Fetch users with permissions
   const { data: users, isLoading } = useQuery({
-    queryKey: ['users', search, currentPage],
+    queryKey: ['users', debouncedSearch, currentPage],
     queryFn: () => {
       const skip = (currentPage - 1) * itemsPerPage;
-      return usersApi.getUsers(skip, itemsPerPage, search || undefined).then(res => res.data);
+      return usersApi.getUsers(skip, itemsPerPage, debouncedSearch || undefined).then(res => res.data);
     },
   });
 
@@ -177,10 +189,10 @@ const UsersPage: React.FC = () => {
     setSelectedUser((prev: any) => ({ ...prev, [field]: value }));
   };
 
-  const handleSearchChange = (value: string) => {
-    setSearch(value);
-    setCurrentPage(1); // Reset to first page when searching
-  };
+  // Reset to first page when debounced search changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [debouncedSearch]);
 
   const getRoleColor = (role: UserRole) => {
     const colors = {
@@ -264,7 +276,7 @@ const UsersPage: React.FC = () => {
             type="text"
             placeholder="Search users by name or email..."
             value={search}
-            onChange={(e) => handleSearchChange(e.target.value)}
+            onChange={(e) => setSearch(e.target.value)}
             className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
           />
         </div>

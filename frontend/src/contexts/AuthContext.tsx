@@ -50,6 +50,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         return;
       }
       
+      // Set the token in axios headers if it exists
+      console.log('🔑 Found token, setting in axios headers');
+      setAccessToken(token);
+      
       // Always get user info first
       const userResponse = await authApi.getMe();
       console.log('✅ User info loaded:', userResponse.data);

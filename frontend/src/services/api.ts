@@ -27,6 +27,18 @@ export const setAccessToken = (token: string) => {
   localStorage.setItem('access_token', token);
 };
 
+// Initialize token from localStorage if it exists
+const initializeTokenFromStorage = () => {
+  const token = localStorage.getItem('access_token') || sessionStorage.getItem('access_token');
+  if (token) {
+    api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    console.log('🔑 Token initialized from storage');
+  }
+};
+
+// Initialize on module load
+initializeTokenFromStorage();
+
 export const clearAccessToken = () => {
   delete api.defaults.headers.common['Authorization'];
   localStorage.removeItem('access_token');
@@ -89,17 +101,24 @@ api.interceptors.response.use(
       original._retry = true;
 
       try {
+        console.log('🔄 Token expired, attempting refresh...');
         const response = await api.post('/auth/refresh');
         const tokens: AuthTokens = response.data;
         setAccessToken(tokens.access_token);
+        console.log('✅ Token refreshed successfully');
         
         // Retry the original request
         original.headers['Authorization'] = `Bearer ${tokens.access_token}`;
         return api(original);
       } catch (refreshError) {
-        // Refresh failed, redirect to login
+        // Refresh failed, clear tokens and redirect to login
+        console.log('❌ Token refresh failed, redirecting to login');
         clearAccessToken();
-        window.location.href = '/login';
+        
+        // Only redirect if we're not already on the login page
+        if (window.location.pathname !== '/login') {
+          window.location.href = '/login';
+        }
         return Promise.reject(refreshError);
       }
     }
