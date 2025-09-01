@@ -2,6 +2,16 @@
 
 A comprehensive admin application with role-based access control, user management, and audit logging.
 
+## 🎥 Video Walkthrough
+
+**[📹 Watch the Complete Demo (Loom Video)](https://www.loom.com/share/d69c8107b9f44bfe914356c8748dca04?sid=2a256c59-6fee-48dd-b4fd-6d2adefc8915)**
+
+This 8-minute walkthrough covers:
+- Live application demonstration with all features
+- Architecture deep dive with ASCII diagrams
+- Security implementation and fixed issues
+- AI assistance disclosure and validation approach
+
 ## Stack
 - **Frontend**: React (TypeScript), React Router, React Query, Tailwind CSS
 - **Backend**: FastAPI (Python), PostgreSQL, JWT Authentication
@@ -283,7 +293,7 @@ This application has been thoroughly evaluated against enterprise security and f
 
 ## AI Usage Disclosure
 
-This project was developed with extensive AI assistance (98% of codebase). See [ai-assist.md](./ai-assist.md) for detailed documentation of AI-assisted development steps, prompts used, and validation approaches across 11 major development phases.
+This project was developed with extensive AI assistance (heavily AI-generated codebase). See [ai-assist.md](./ai-assist.md) for detailed documentation of AI-assisted development steps, prompts used, and validation approaches across 11 major development phases.
 
 ## License
 
