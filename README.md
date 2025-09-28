@@ -295,6 +295,4 @@ This application has been thoroughly evaluated against enterprise security and f
 
 This project was developed with extensive AI assistance (heavily AI-generated codebase). See [ai-assist.md](./ai-assist.md) for detailed documentation of AI-assisted development steps, prompts used, and validation approaches across 11 major development phases.
 
-## License
 
-MIT License - see LICENSE file for details.
